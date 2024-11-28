@@ -28,26 +28,30 @@ const ChartTitle = styled.h2`
 
 interface TemperatureGraphProps {
   forecastData: { date: string; minTemp: number; maxTemp: number }[];
+  unit: "metric" | "imperial"; // Celsius ("metric") or Fahrenheit ("imperial")
 }
 
-const TemperatureGraph: React.FC<TemperatureGraphProps> = ({ forecastData }) => {
+const TemperatureGraph: React.FC<TemperatureGraphProps> = ({ forecastData, unit }) => {
   const labels = forecastData.map(day => day.date);
   const minTemps = forecastData.map(day => day.minTemp);
   const maxTemps = forecastData.map(day => day.maxTemp);
+
+  // Adjust labels based on unit
+  const temperatureUnitLabel = unit === "metric" ? "°C" : "°F";
 
   // Prepare the chart data
   const data = {
     labels,
     datasets: [
       {
-        label: 'Min Temperature (°C)',
+        label: `Min Temperature (${temperatureUnitLabel})`,
         data: minTemps,
         borderColor: 'blue',
         backgroundColor: 'rgba(0, 0, 255, 0.2)',
         fill: true,
       },
       {
-        label: 'Max Temperature (°C)',
+        label: `Max Temperature (${temperatureUnitLabel})`,
         data: maxTemps,
         borderColor: 'red',
         backgroundColor: 'rgba(255, 0, 0, 0.2)',

@@ -1,13 +1,8 @@
 import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer as LeafletMapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-
-// Define the types for the props
-interface MapProps {
-  coordinates: { lat: number; lon: number } | null;
-  location: string;
-}
+import styled from "styled-components";
 
 // Corrigir ícones padrão do Leaflet
 L.Icon.Default.mergeOptions({
@@ -16,21 +11,34 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
+// Define estilos do MapContainer
+const StyledMapContainer = styled(LeafletMapContainer)`
+  height: 40vh;
+  width: 60%; /* Largura padrão para ecrãs grandes */
+  margin-top: 20px;
+
+  @media (max-width: 768px) {
+    width: 90%; /* Para ecrãs pequenos, ocupa 90% */
+  }
+
+  @media (min-width: 1400px) {
+    width: 45%; /* Em ecrãs muito grandes, limita a 60% */
+    margin: 0 auto; /* Centraliza o mapa horizontalmente */
+  }
+`;
+
+interface MapProps {
+  coordinates: { lat: number; lon: number } | null;
+  location: string;
+}
+
 const Map: React.FC<MapProps> = ({ coordinates, location }) => {
   if (!coordinates) {
     return null; // Não renderiza o mapa se as coordenadas não existirem
   }
 
   return (
-    <MapContainer
-      center={[coordinates.lat, coordinates.lon]}
-      zoom={10}
-      style={{
-        height: "50vh",
-        width: "50%",
-        marginTop: "20px"
-      }}
-    >
+    <StyledMapContainer center={[coordinates.lat, coordinates.lon]} zoom={10}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <TileLayer
         url={`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_API_KEY}`}
@@ -40,7 +48,7 @@ const Map: React.FC<MapProps> = ({ coordinates, location }) => {
       <Marker position={[coordinates.lat, coordinates.lon]}>
         <Popup>{location}</Popup>
       </Marker>
-    </MapContainer>
+    </StyledMapContainer>
   );
 };
 

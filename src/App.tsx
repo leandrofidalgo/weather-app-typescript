@@ -71,7 +71,6 @@ const Button = styled.button`
 `;
 
 const ForecastContainer = styled.div`
-  margin-top: 30px;
   width: 100%;
   max-width: 1000px;
   display: flex;
@@ -277,7 +276,7 @@ const WeatherApp: React.FC = () => {
     });
 
     return Object.values(dailyData)
-      .slice(0, 5) // Limita os dados para 5 dias
+      .slice(0, 5)
       .map((day: any) => ({
         date: day.date,
         minTemp: Math.round(Math.min(...day.temps)),
@@ -330,10 +329,7 @@ const WeatherApp: React.FC = () => {
             currentWeather={weatherData[unit]?.currentWeather} 
             unit={unit} 
           />
-          {coordinates && (
-              <Map coordinates={coordinates} location={location} />
-          )}
-
+          <h3 style={{ color: 'white' }}>5 Days Forecast</h3>
           {weatherData[unit].forecastData.length > 0 && (
             <ForecastContainer>
               {weatherData[unit].forecastData.map((day, index) => (
@@ -354,8 +350,13 @@ const WeatherApp: React.FC = () => {
               ))}
             </ForecastContainer>
           )}
+          <h3 style={{ color: 'white' }}>Current Location</h3>
+          {coordinates && (
+              <Map coordinates={coordinates} location={location} />
+          )}
+          <h3 style={{ color: 'white' }}>Graph of 5 Days Forecast</h3>
           {weatherData[unit].forecastData.length > 0 && (
-              <TemperatureGraph forecastData={weatherData[unit]?.forecastData} />
+              <TemperatureGraph forecastData={weatherData[unit]?.forecastData} unit={unit} />
           )}
         </>
       )}
