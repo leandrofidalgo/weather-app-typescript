@@ -1,6 +1,6 @@
-<<<<<<< HEAD
 # weather-app-typescript
 Weather App with React and Typescript
+Need to be added a .env file with REACT_APP_API_KEY = YOUR_API_KEY for the OpenWeather Api.
 =======
 # Getting Started with Create React App
 
