@@ -3,8 +3,9 @@ import styled from "styled-components";
 import Map from "./components/Map/Map";
 import WeatherCard from "./components/WeatherCard/WeatherCard";
 import TemperatureGraph from './components/TemperatureGraph/TemperatureGraph';
+import ForecastContainer from './components/Forecast/ForecastContainer';
 
-// Styled Components for Material-like Design
+// Styled Components
 const AppContainer = styled.div`
   font-family: 'Roboto', sans-serif;
   background: linear-gradient(to bottom right, #00aaff, #0044cc);
@@ -59,43 +60,15 @@ const Button = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.4s ease, transform 0.2s ease-in-out;
 
   &:hover {
     background-color: #45a049;
+    transform: scale(1.05);
   }
 
   @media (max-width: 599px) {
     width: 100%;
-  }
-`;
-
-const ForecastContainer = styled.div`
-  width: 100%;
-  max-width: 1000px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  @media (min-width: 768px) {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-`;
-
-const CardTitle = styled.h3`
-  margin: 0;
-  font-size: 20px;
-  color: #1a73e8;
-`;
-
-const ForecastCard = styled.div`
-  background-color: #ffffff;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  flex-basis: 100%;
-  @media (min-width: 768px) {
-    flex-basis: 45%;
   }
 `;
 
@@ -122,11 +95,11 @@ const ToggleInput = styled.input`
   transition: background-color 0.3s ease;
   
   &:checked {
-    background-color: #4caf50; /* Verde para quando estiver ativo */
+    background-color: #4caf50;
   }
 
   &:checked::before {
-    left: 30px; /* Move o círculo para a direita */
+    left: 30px;
   }
 
   &::before {
@@ -142,6 +115,20 @@ const ToggleInput = styled.input`
   }
 `;
 
+const Footer = styled.footer`
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background-color: white;
+  color: black;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  z-index: 1000;
+`;
+
 // Definindo os tipos para os dados do tempo
 interface WeatherData {
   metric: {
@@ -150,6 +137,7 @@ interface WeatherData {
       description: string;
       humidity: number;
       windSpeed: number;
+      icon: string;
     };
     forecastData: ForecastData[];
   };
@@ -159,6 +147,7 @@ interface WeatherData {
       description: string;
       humidity: number;
       windSpeed: number;
+      icon: string;
     };
     forecastData: ForecastData[];
   };
@@ -171,6 +160,7 @@ interface ForecastData {
   description: string;
   humidity: number;
   windSpeed: string;
+  icon: string;
 }
 
 interface Coordinates {
@@ -226,6 +216,9 @@ const WeatherApp: React.FC = () => {
       const forecastDataMetric = await forecastResponseMetric.json();
       const forecastDataImperial = await forecastResponseImperial.json();
 
+      const weatherIconCode = currentDataMetric.weather[0].icon;
+      const iconUrl = `https://openweathermap.org/img/wn/${weatherIconCode}@2x.png`;
+
       setWeatherData({
         metric: {
           currentWeather: {
@@ -233,6 +226,7 @@ const WeatherApp: React.FC = () => {
             description: currentDataMetric.weather[0].description,
             humidity: currentDataMetric.main.humidity,
             windSpeed: currentDataMetric.wind.speed,
+            icon: iconUrl,
           },
           forecastData: processForecastData(forecastDataMetric),
         },
@@ -242,6 +236,7 @@ const WeatherApp: React.FC = () => {
             description: currentDataImperial.weather[0].description,
             humidity: currentDataImperial.main.humidity,
             windSpeed: currentDataImperial.wind.speed,
+            icon: iconUrl,
           },
           forecastData: processForecastData(forecastDataImperial),
         },
@@ -267,12 +262,14 @@ const WeatherApp: React.FC = () => {
           descriptions: [],
           humidities: [],
           windSpeeds: [],
+          icons: [], // Adicionando um campo para os ícones
         };
       }
       dailyData[date].temps.push(item.main.temp);
       dailyData[date].descriptions.push(item.weather[0].description);
       dailyData[date].humidities.push(item.main.humidity);
       dailyData[date].windSpeeds.push(item.wind.speed);
+      dailyData[date].icons.push(item.weather[0].icon); // Adicionando o código do ícone
     });
 
     return Object.values(dailyData)
@@ -284,12 +281,13 @@ const WeatherApp: React.FC = () => {
         description: day.descriptions[0],
         humidity: Math.round(
           day.humidities.reduce((sum: number, humidity: number) => sum + humidity, 0) /
-            day.humidities.length
+          day.humidities.length
         ),
         windSpeed: (
           day.windSpeeds.reduce((sum: number, speed: number) => sum + speed, 0) /
           day.windSpeeds.length
         ).toFixed(2),
+        icon: day.icons[0], // Retornando o primeiro ícone do dia
       }));
   };
 
@@ -325,41 +323,30 @@ const WeatherApp: React.FC = () => {
 
       {weatherData && weatherData[unit] && (
         <>
-          <WeatherCard 
-            currentWeather={weatherData[unit]?.currentWeather} 
-            unit={unit} 
+          <WeatherCard
+            currentWeather={weatherData[unit]?.currentWeather}
+            unit={unit}
           />
           <h3 style={{ color: 'white' }}>5 Days Forecast</h3>
           {weatherData[unit].forecastData.length > 0 && (
-            <ForecastContainer>
-              {weatherData[unit].forecastData.map((day, index) => (
-                <ForecastCard key={index}>
-                  <CardTitle>{day.date}</CardTitle>
-                  <p>
-                    Min Temp: {day.minTemp}° {unit === "metric" ? "C" : "F"}
-                    <br />
-                    Max Temp: {day.maxTemp}° {unit === "metric" ? "C" : "F"}
-                    <br />
-                    Condition: {day.description}
-                    <br />
-                    Humidity: {day.humidity}%
-                    <br />
-                    Wind Speed: {day.windSpeed} m/s
-                  </p>
-                </ForecastCard>
-              ))}
-            </ForecastContainer>
+            <ForecastContainer
+              forecastData={weatherData[unit].forecastData}
+              unit={unit}
+            />
           )}
           <h3 style={{ color: 'white' }}>Current Location</h3>
           {coordinates && (
-              <Map coordinates={coordinates} location={location} />
+            <Map coordinates={coordinates} location={location} />
           )}
           <h3 style={{ color: 'white' }}>Graph of 5 Days Forecast</h3>
           {weatherData[unit].forecastData.length > 0 && (
-              <TemperatureGraph forecastData={weatherData[unit]?.forecastData} unit={unit} />
+            <TemperatureGraph forecastData={weatherData[unit]?.forecastData} unit={unit} />
           )}
         </>
       )}
+      <Footer>
+        Made by Leandro Fidalgo
+      </Footer>
     </AppContainer>
   );
 };
