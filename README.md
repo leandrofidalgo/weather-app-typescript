@@ -68,10 +68,12 @@ Certifique-se de ter instalado em sua máquina:
 
 6. Abra http://localhost:3000 no navegador.
 
-📄 Licença
+## 📄 Licença
+
 Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
-🌟 Agradecimentos
+## 🌟 Agradecimentos
+
 OpenWeatherMap
 React Documentation
 Typescript Documentation
