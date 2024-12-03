@@ -39,12 +39,21 @@ Certifique-se de ter instalado em sua máquina:
    git clone https://github.com/seu-usuario/weather-app.git
 
 2. Navegue para o diretório do projeto:
+
+   ```bash
    cd weather-app
 
 3. Instale as dependências:
 
-  bash
+  ```bash
   Copiar código
   npm install
   # ou
   yarn install
+
+4. Crie um arquivo .env na raiz do projeto e adicione sua chave de API:
+
+  ```bash
+   env
+   Copiar código
+   REACT_APP_WEATHER_API_KEY=YOUR_API_KEY
