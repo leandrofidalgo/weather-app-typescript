@@ -36,7 +36,7 @@ Certifique-se de ter instalado em sua máquina:
 1. Clone este repositório:
 
    ```bash
-   git clone https://github.com/seu-usuario/weather-app.git
+   git clone https://github.com/leandrofidalgo/weather-app-typescript.git
 
 2. Navegue para o diretório do projeto:
 
@@ -46,7 +46,6 @@ Certifique-se de ter instalado em sua máquina:
 3. Instale as dependências:
 
    ```bash
-   Copiar código
    npm install
    # ou
    yarn install
@@ -54,14 +53,12 @@ Certifique-se de ter instalado em sua máquina:
 4. Crie um arquivo .env na raiz do projeto e adicione sua chave de API:
 
    ```bash
-   env
-   Copiar código
+   #Put your Key in YOUR_API_KEY
    REACT_APP_WEATHER_API_KEY=YOUR_API_KEY
 
 5. Inicie o servidor de desenvolvimento:
 
    ````bash
-   Copiar código
    npm start
    # ou
    yarn start
