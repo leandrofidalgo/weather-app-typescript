@@ -1,31 +1,31 @@
 # WeatherApp 🌦️
 
-Este é um projeto simples em **React** com **TypeScript** que exibe informações meteorológicas para uma localização específica. Ele utiliza a [OpenWeatherMap API](https://openweathermap.org/api) para buscar os dados climáticos.
+Este é um projeto simples em **React** com **TypeScript** que exibe informações meteorológicas para uma localização específica. Utiliza a [OpenWeatherMap API](https://openweathermap.org/api) para obter os dados meteorológicos.
 
 ## 📋 Funcionalidades
 
 - Exibe a temperatura atual, condições meteorológicas e ícones representativos.
-- Permite buscar a meteorologia de diferentes cidades.
-- Interface responsiva para uso em desktop e dispositivos móveis.
+- Permite pesquisar a meteorologia de diferentes cidades.
+- Interface responsiva para utilização em desktop e dispositivos móveis.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **React**: Biblioteca para criação de interfaces de usuário.
+- **React**: Biblioteca para criação de interfaces de utilizador.
 - **TypeScript**: Superset do JavaScript que adiciona tipagem estática.
 - **Styled Components**: Para estilização baseada em componentes.
 - **OpenWeatherMap API**: Fonte de dados meteorológicos.
 
 ---
 
-## 🚀 Começando
+## 🚀 Como começar
 
 Siga estas etapas para executar o projeto localmente.
 
 ### Pré-requisitos
 
-Certifique-se de ter instalado em sua máquina:
+Certifique-se de ter instalado na sua máquina:
 
 - Node.js >= 14.x
 - npm >= 6.x ou yarn >= 1.x
@@ -71,8 +71,8 @@ Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes
 
 ## 🌟 Agradecimentos
 
-OpenWeatherMap
+- OpenWeatherMap
 
-React Documentation
+- React Documentation
 
-Typescript Documentation
+- Typescript Documentation
