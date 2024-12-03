@@ -45,15 +45,33 @@ Certifique-se de ter instalado em sua máquina:
 
 3. Instale as dependências:
 
-  ```bash
-  Copiar código
-  npm install
-  # ou
-  yarn install
+   ```bash
+   Copiar código
+   npm install
+   # ou
+   yarn install
 
 4. Crie um arquivo .env na raiz do projeto e adicione sua chave de API:
 
-  ```bash
+   ```bash
    env
    Copiar código
    REACT_APP_WEATHER_API_KEY=YOUR_API_KEY
+
+5. Inicie o servidor de desenvolvimento:
+
+   ````bash
+   Copiar código
+   npm start
+   # ou
+   yarn start
+
+6. Abra http://localhost:3000 no navegador.
+
+📄 Licença
+Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
+🌟 Agradecimentos
+OpenWeatherMap
+React Documentation
+Typescript Documentation
