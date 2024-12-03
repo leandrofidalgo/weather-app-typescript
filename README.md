@@ -54,7 +54,7 @@ Certifique-se de ter instalado na sua máquina:
 
    ```bash
    #Put your Key in YOUR_API_KEY
-   REACT_APP_WEATHER_API_KEY=YOUR_API_KEY
+   REACT_APP_API_KEY=YOUR_API_KEY
 
 5. Inicie o servidor de desenvolvimento:
 
